@@ -52,12 +52,12 @@ const Question = ({ mongoUserId }: Props) => {
       // Make an async call to your API -> create a question
       // contain all form data
       // navigate to home page
-
       await createQuestion({
         title: values.title,
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
+        path: pathname,
       });
 
       router.push('/');
