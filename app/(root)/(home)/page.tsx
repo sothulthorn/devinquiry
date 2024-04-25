@@ -11,6 +11,8 @@ import Link from 'next/link';
 export default async function Home() {
   const result = await getQuestions({});
 
+  if (!result) return;
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
