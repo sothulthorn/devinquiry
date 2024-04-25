@@ -22,13 +22,13 @@ import { Badge } from '../ui/badge';
 import { createQuestion } from '@/lib/actions/question.action';
 import { useRouter, usePathname } from 'next/navigation';
 
-const type = 'Create';
-
 interface Props {
+  type?: string;
   mongoUserId: string;
+  questionDetails?: string;
 }
 
-const Question = ({ mongoUserId }: Props) => {
+const Question = ({ type, mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
