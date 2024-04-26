@@ -1,4 +1,5 @@
 import Answer from '@/components/forms/Answer';
+import AllAnswers from '@/components/shared/AllAnswers';
 import Metric from '@/components/shared/Metric';
 import ParseHTML from '@/components/shared/ParseHTML';
 import RenderTag from '@/components/shared/RenderTag';
@@ -87,7 +88,20 @@ const Page = async ({ params, searchParams }: URLProps) => {
         ))}
       </div>
 
-      <Answer />
+      {/* Answer Component */}
+      <AllAnswers
+        questionId={result._id}
+        userId={mongoUser._id}
+        totalAnswers={result.answers.length}
+        page={searchParams?.page ? +searchParams.page : 1}
+        filter={searchParams?.filter}
+      />
+
+      <Answer
+        question={result.content}
+        questionId={JSON.stringify(result._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };

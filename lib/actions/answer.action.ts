@@ -26,13 +26,13 @@ export async function createAnswer(params: CreateAnswerParams) {
       $push: { answers: newAnswer._id },
     });
 
-    await Interaction.create({
-      user: author,
-      action: 'answer',
-      question,
-      answer: newAnswer._id,
-      tags: questionObject.tags,
-    });
+    // await Interaction.create({
+    //   user: author,
+    //   action: 'answer',
+    //   question,
+    //   answer: newAnswer._id,
+    //   tags: questionObject.tags,
+    // });
 
     await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
@@ -43,50 +43,50 @@ export async function createAnswer(params: CreateAnswerParams) {
   }
 }
 
-// export async function getAnswers(params: GetAnswersParams) {
-//   try {
-//     connectToDatabase();
+export async function getAnswers(params: GetAnswersParams) {
+  try {
+    connectToDatabase();
 
-//     const { questionId, sortBy, page = 1, pageSize = 10 } = params;
+    const { questionId, sortBy, page = 1, pageSize = 10 } = params;
 
-//     const skipAmount = (page - 1) * pageSize;
+    const skipAmount = (page - 1) * pageSize;
 
-//     let sortOptions = {};
+    let sortOptions = {};
 
-//     switch (sortBy) {
-//       case 'hightestUpvotes':
-//         sortOptions = { upvotes: -1 };
-//         break;
-//       case 'lowestUpvotes':
-//         sortOptions = { upvotes: 1 };
-//         break;
-//       case 'recent':
-//         sortOptions = { createdAt: -1 };
-//         break;
-//       case 'old':
-//         sortOptions = { createdAt: 1 };
-//         break;
+    switch (sortBy) {
+      case 'hightestUpvotes':
+        sortOptions = { upvotes: -1 };
+        break;
+      case 'lowestUpvotes':
+        sortOptions = { upvotes: 1 };
+        break;
+      case 'recent':
+        sortOptions = { createdAt: -1 };
+        break;
+      case 'old':
+        sortOptions = { createdAt: 1 };
+        break;
 
-//       default:
-//         break;
-//     }
+      default:
+        break;
+    }
 
-//     const answers = await Answer.find({ question: questionId })
-//       .populate('author', '_id clerkId name picture')
-//       .skip(skipAmount)
-//       .limit(pageSize)
-//       .sort(sortOptions);
+    const answers = await Answer.find({ question: questionId })
+      .populate('author', '_id clerkId name picture')
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort(sortOptions);
 
-//     const totalAnswer = await Answer.countDocuments({ question: questionId });
+    const totalAnswer = await Answer.countDocuments({ question: questionId });
 
-//     const isNextAnswer = totalAnswer > skipAmount + answers.length;
+    const isNextAnswer = totalAnswer > skipAmount + answers.length;
 
-//     return { answers, isNextAnswer };
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    return { answers, isNextAnswer };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 // export async function upvoteAnswer(params: AnswerVoteParams) {
 //   try {
