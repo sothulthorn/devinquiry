@@ -5,6 +5,7 @@ import {
   downvoteQuestion,
   upvoteQuestion,
 } from '@/lib/actions/question.action';
+import { toggleSaveQuestion } from '@/lib/actions/user.action';
 import { formatAndDivideNumber } from '@/lib/utils';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -35,11 +36,11 @@ const Votes = ({
   const router = useRouter();
 
   const handleSave = async () => {
-    // await toggleSaveQuestion({
-    //   userId: JSON.parse(userId),
-    //   questionId: JSON.parse(itemId),
-    //   path: pathname,
-    // });
+    await toggleSaveQuestion({
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(itemId),
+      path: pathname,
+    });
     // return toast({
     //   title: `Question ${
     //     !hasSaved ? 'Saved in' : 'Remove from'
