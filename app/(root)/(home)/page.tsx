@@ -5,13 +5,38 @@ import NoResult from '@/components/shared/NoResult';
 import LocalSearchbar from '@/components/shared/search/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { HomePageFilters } from '@/constants/filters';
-import { getQuestions } from '@/lib/actions/question.action';
+import {
+  getQuestions,
+  getRecommendedQuestions,
+} from '@/lib/actions/question.action';
+import { SearchParamsProps } from '@/types';
+import { auth } from '@clerk/nextjs';
 import Link from 'next/link';
 
-export default async function Home() {
-  const result = await getQuestions({});
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const { userId } = auth();
+  let result;
 
-  if (!result) return;
+  if (searchParams?.filter === 'recommended') {
+    if (userId) {
+      result = await getRecommendedQuestions({
+        userId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+      });
+    } else {
+      result = {
+        questions: [],
+        isNext: false,
+      };
+    }
+  } else {
+    result = await getQuestions({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams.page ? +searchParams.page : 1,
+    });
+  }
 
   return (
     <>
@@ -30,7 +55,7 @@ export default async function Home() {
           route="/"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for questions"
+          placeholder="Search for question"
           otherClasses="flex-1"
         />
 
