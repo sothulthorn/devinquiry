@@ -10,9 +10,8 @@ import {
 } from './shared.types';
 import Question from '@/database/question.model';
 import { revalidatePath } from 'next/cache';
-// import Interaction from '@/database/interaction.model';
-import User from '@/database/user.model';
 import Interaction from '@/database/interaction.model';
+import User from '@/database/user.model';
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {

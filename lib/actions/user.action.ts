@@ -1,8 +1,8 @@
 'use server';
 
 import User from '@/database/user.model';
-import Tag from '@/database/tag.model';
 import { connectToDatabase } from '../mongoose';
+import { FilterQuery } from 'mongoose';
 import {
   CreateUserParams,
   DeleteUserParams,
@@ -13,9 +13,9 @@ import {
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from './shared.types';
-import Question from '@/database/question.model';
 import { revalidatePath } from 'next/cache';
-import { FilterQuery } from 'mongoose';
+import Question from '@/database/question.model';
+import Tag from '@/database/tag.model';
 import Answer from '@/database/answer.model';
 import { BadgeCriteriaType } from '@/types';
 import { assignBadges } from '../utils';
@@ -31,6 +31,7 @@ export async function getUserById(params: any) {
     return user;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 
@@ -250,7 +251,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   }
 }
 
-export async function getUserInfo(params: GetUserByIdParams) {
+export const getUserInfo = async (params: GetUserByIdParams) => {
   try {
     connectToDatabase();
     const { userId } = params;
@@ -339,7 +340,7 @@ export async function getUserInfo(params: GetUserByIdParams) {
     console.log(error);
     throw error;
   }
-}
+};
 
 export const getUserQuestions = async (params: GetUserStatsParams) => {
   try {
