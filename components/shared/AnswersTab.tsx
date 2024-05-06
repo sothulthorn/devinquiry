@@ -1,5 +1,6 @@
 import { getUserAnswers } from '@/lib/actions/user.action';
 import AnswerCard from '../cards/AnswerCard';
+import Pagination from './Pagination';
 
 interface AnswersTabProps {
   userId: string;
@@ -30,6 +31,13 @@ const AnswersTab = async ({
           createdAt={answer.createdAt}
         />
       ))}
+
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNextAnswer}
+        />
+      </div>
     </>
   );
 };
