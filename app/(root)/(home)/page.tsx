@@ -13,6 +13,12 @@ import {
 import { SearchParamsProps } from '@/types';
 import { auth } from '@clerk/nextjs';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home | Dev Inquiry',
+  description: 'Dev Inquiry is a community of 1,000,000+ developers. Join us.',
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();

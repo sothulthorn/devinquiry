@@ -10,7 +10,7 @@ import type { Metadata } from 'next';
 import Pagination from '@/components/shared/Pagination';
 
 export const metadata: Metadata = {
-  title: 'Collections | Dev Overflow',
+  title: 'Collections | Dev Inquiry',
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {
